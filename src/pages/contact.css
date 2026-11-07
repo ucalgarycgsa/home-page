@@ -1,0 +1,28 @@
+/* Contact (Seat 6) */
+
+/* Tight header on phones: the H1 is short, the lead is one line. */
+.contact-page .page-header { padding-bottom: var(--s-4); }
+.contact-page .page-header + .section.tone-paper { padding-top: var(--s-5); }
+@media (min-width: 768px) {
+  .contact-page .page-header { padding-bottom: clamp(1.5rem, 0.5rem + 3vw, 3.5rem); }
+  .contact-page .page-header + .section.tone-paper { padding-top: clamp(2.5rem, 1.5rem + 3vw, 4.5rem); }
+}
+
+/* Partnerships: heading and text side by side from 1024 px; a quiet button
+   (the page's one filled action is "Email CGSA" above). */
+.contact-partner__grid { display: grid; gap: var(--s-4) var(--gutter); }
+@media (min-width: 1024px) {
+  .contact-partner__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); align-items: baseline; }
+  .contact-partner__title { grid-column: 1 / span 5; }
+  .contact-partner__text { grid-column: 7 / span 6; }
+}
+.contact-partner .section__actions { margin-top: var(--s-5); }
+
+.contact-urgent__body { margin-top: var(--s-3); }
+.contact-urgent .section__actions { margin-top: var(--s-4); }
+
+/* Chinese leads: keep-all must reach the <p> itself (base resets word-break on every :lang(zh) element). */
+:lang(zh) .contact-page .page-header__lead p { word-break: keep-all; overflow-wrap: anywhere; }
+
+/* Short Chinese paragraphs: balance the 2–3 lines so none ends on a 2-character line. */
+:lang(zh) .contact-page .section__body { text-wrap: balance; }

@@ -1,0 +1,260 @@
+/* Header, primary nav, language switch, mobile menu */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  background: color-mix(in srgb, var(--c-paper) 97%, transparent);
+  border-bottom: 1px solid var(--c-rule);
+}
+.site-header__bar {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: var(--s-4);
+  min-height: var(--header-h);
+}
+
+/* Brand lockup: seal + short name (+ Chinese name on wide screens) */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: var(--target);
+  text-decoration: none;
+  color: var(--c-ink);
+  margin-right: auto;
+}
+.brand__seal { width: 44px; height: 44px; flex: none; }
+.brand__text { display: flex; flex-direction: column; line-height: 1.15; white-space: nowrap; }
+.brand__name {
+  font-family: 'Source Serif 4 Variable', Georgia, serif;
+  font-size: 1.1875rem;
+  font-weight: 560;
+  letter-spacing: -0.01em;
+}
+.brand__zh {
+  font-family: var(--font-cjk-serif); /* same voice as the footer lockup (Gate 4, M4) */
+  font-size: 0.8125rem;           /* 13 px: the floor for Chinese text */
+  letter-spacing: 0.06em;
+  color: var(--c-muted);
+  margin-top: 0.15rem;
+}
+/* English pages: the Chinese line only where there's room. */
+@media (max-width: 1179px) { :root:lang(en) .site-header .brand__zh { display: none; } }
+/* Chinese pages, every width: the Chinese name leads, the English short name follows. */
+:root:lang(zh) :is(.site-header, .mobile-menu) .brand__text { flex-direction: column-reverse; }
+:root:lang(en) .mobile-menu .brand__zh { display: none; }
+:root:lang(zh) :is(.site-header, .mobile-menu) .brand__zh {
+  font-family: var(--font-cjk-serif);
+  font-size: 1.0625rem;
+  letter-spacing: 0.04em;
+  color: var(--c-ink);
+  font-weight: var(--fw-h1);
+  margin: 0 0 0.1rem;
+}
+:root:lang(zh) :is(.site-header, .mobile-menu) .brand__name { font-size: 0.8125rem; color: var(--c-muted); font-weight: 500; letter-spacing: 0.01em; }
+@media (max-width: 479px) {
+  :root:lang(zh) :is(.site-header, .mobile-menu) .brand__zh { font-size: 0.9375rem; letter-spacing: 0.02em; }
+}
+
+/* Desktop nav */
+.site-nav { display: none; }
+@media (min-width: 1024px) {
+  .site-nav { display: flex; align-items: center; gap: var(--s-5); }
+}
+.site-nav__list { display: flex; gap: var(--s-1); margin: 0; }
+.site-nav__link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target);
+  padding-inline: 0.7rem;
+  font-size: var(--fs-small);
+  font-weight: 520;
+  letter-spacing: 0.01em;
+  color: var(--c-ink-2);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease);
+}
+:lang(zh) .site-nav__link { letter-spacing: var(--ls-nav); font-weight: 500; }
+.site-nav__link { white-space: nowrap; } /* a nav label never breaks (主頁, 活動) */
+.site-nav__link:hover { color: var(--c-ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.55em; }
+/* Active page: a 2px ink rule under the label (as the language switch marks its
+   active item) — red stays for the headline terminals (homepage critic, M6). */
+.site-nav__link.is-active,
+.site-nav__join.is-active {
+  color: var(--c-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--c-ink);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.55em;
+}
+/* Join: a text link, not a filled button — each page keeps its own single filled CTA. */
+.site-nav__join {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  min-height: var(--target);
+  padding-inline: var(--s-4) 0.25rem;
+  border-left: 1px solid var(--c-rule);
+  font-size: var(--fs-small);
+  font-weight: 620;
+  color: var(--c-ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.site-nav__join:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.55em; }
+
+/* Language switch */
+.lang-switch { display: inline-flex; align-items: center; }
+.lang-switch__item { display: inline-flex; align-items: center; }
+.lang-switch__sep { color: var(--c-rule); padding-inline: 0.1rem; user-select: none; }
+.lang-switch__btn {
+  min-width: var(--target);
+  min-height: var(--target);
+  padding: 0 0.35rem;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  color: var(--c-muted);
+  transition: color var(--dur-fast) var(--ease);
+}
+.lang-switch__btn:lang(zh) { font-family: var(--font-cjk-sans); letter-spacing: 0.06em; }
+.lang-switch__short { display: none; }
+.lang-switch__btn:hover { color: var(--c-ink); }
+.lang-switch__btn[aria-pressed='true'] {
+  color: var(--c-ink);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.4em;
+}
+.lang-switch--large .lang-switch__btn { font-size: 1.125rem; min-height: 48px; }
+
+/* Menu toggle (mobile/tablet only) */
+.menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: var(--target);
+  padding: 0 0.25rem 0 0.5rem;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  white-space: nowrap;
+  flex: none;
+}
+@media (min-width: 1024px) { .site-header__bar > .menu-toggle { display: none; } }
+.menu-toggle__icon {
+  position: relative;
+  width: 18px;
+  height: 8px;
+  border-top: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+}
+.menu-toggle__icon.is-close { border: 0; height: 18px; }
+.menu-toggle__icon.is-close::before,
+.menu-toggle__icon.is-close::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 18px;
+  border-top: 1.5px solid currentColor;
+  transform: rotate(45deg);
+}
+.menu-toggle__icon.is-close::after { transform: rotate(-45deg); }
+
+@media (max-width: 1023px) {
+  .site-header__bar { gap: var(--s-2); }
+  .site-header__lang .lang-switch__btn { min-width: 40px; padding: 0 0.2rem; }
+  /* Compact labels in the tablet header: EN | 简 | 繁 */
+  .site-header__lang .lang-switch__long { display: none; }
+  .site-header__lang .lang-switch__short { display: inline; }
+}
+/* Phones: the language switch lives in the menu (full labels, 48 px targets). */
+@media (max-width: 479px) {
+  .site-header__lang { display: none; }
+  .site-header .brand { gap: 0.6rem; }
+  .site-header .brand__seal { width: 40px; height: 40px; }
+}
+.mobile-menu__email { display: inline-flex; align-items: center; min-height: var(--target); }
+@media (max-width: 359px) {
+  .site-header .brand__name { font-size: 1rem; }
+}
+@media (max-width: 339px) {
+  .site-header .brand__text { display: none; }
+}
+
+/* Mobile menu: full-height sheet */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-menu);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  background: var(--c-paper);
+  animation: menu-in var(--dur) var(--ease);
+}
+@keyframes menu-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: none; }
+}
+.mobile-menu__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--header-h);
+  border-bottom: 1px solid var(--c-rule);
+}
+.mobile-menu__top .brand__seal { width: 40px; height: 40px; }
+.mobile-menu__lang { padding-block: var(--s-3) var(--s-2); display: flex; align-items: center; gap: var(--s-4); border-bottom: 1px solid var(--c-rule); }
+.mobile-menu__lang .lang-switch { margin-left: -0.35rem; }
+.mobile-menu__nav { padding-block: var(--s-1) var(--s-4); }
+.mobile-menu__list { margin: 0; }
+.mobile-menu__list li { border-bottom: 1px solid var(--c-rule); }
+.mobile-menu__link {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  min-height: 48px; /* eight items fit 360×740 without scrolling; ≥ 44 px targets */
+  padding-block: 0.4rem;
+  font-family: var(--font-serif);
+  font-size: 1.625rem;
+  font-weight: var(--fw-h2);
+  letter-spacing: var(--ls-h2);
+  line-height: 1.25;
+  text-decoration: none;
+}
+:lang(zh) .mobile-menu__link { font-size: 1.5rem; }
+.mobile-menu__link.is-active { text-decoration: underline; text-decoration-color: var(--c-ink); text-decoration-thickness: 2px; text-underline-offset: 0.16em; } /* clear of the row hairline (no double line) */
+.mobile-menu__foot {
+  margin-top: auto;
+  padding-block: var(--s-4) calc(var(--s-5) + env(safe-area-inset-bottom));
+  display: grid;
+  gap: var(--s-5);
+  border-top: 1px solid var(--c-rule);
+}
+.mobile-menu__contact { display: grid; gap: var(--s-4); margin: 0; }
+@media (min-width: 480px) { .mobile-menu__contact { grid-template-columns: auto 1fr; column-gap: var(--s-7); } }
+.mobile-menu__contact dd { margin: 0.25rem 0 0; font-weight: 600; overflow-wrap: anywhere; }
+@media (min-width: 1024px) { .mobile-menu { display: none; } }
+
+/* Narrow desktop (1024–1279): with Home added, five items + Join + three languages
+   must share the bar with the Chinese-first lockup — compact labels, tighter spacing. */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .site-nav { gap: var(--s-3); }
+  .site-nav__link { padding-inline: 0.45rem; }
+  .site-nav__join { padding-inline: var(--s-3) 0.25rem; }
+  .site-header__lang .lang-switch__btn { min-width: 40px; padding: 0 0.2rem; }
+  .site-header__lang .lang-switch__long { display: none; }
+  .site-header__lang .lang-switch__short { display: inline; }
+  :root:lang(zh) .site-header .brand__zh { font-size: 0.9375rem; letter-spacing: 0.02em; }
+}

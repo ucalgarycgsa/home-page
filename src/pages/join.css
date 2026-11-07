@@ -1,0 +1,43 @@
+/* Join (Seat 6) */
+
+/* Tight header on phones so "Copy WeChat ID" lands in the first screen at 360×740. */
+.join-page .page-header { padding-bottom: var(--s-4); }
+.join-page .page-header + .section.tone-paper { padding-top: var(--s-5); }
+@media (min-width: 768px) {
+  .join-page .page-header { padding-bottom: clamp(1.5rem, 0.5rem + 3vw, 3.5rem); }
+  .join-page .page-header + .section.tone-paper { padding-top: clamp(2.5rem, 1.5rem + 3vw, 4.5rem); }
+}
+
+/* Ways in: a visible heading replaces the old kicker + hidden heading pair. */
+.join-ways__heading { margin-bottom: var(--s-4); }
+.ways { margin: 0; border-top: 1px solid var(--c-ink); }
+.ways__item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-2);
+  padding-block: var(--s-5) var(--s-6);
+  border-bottom: 1px solid var(--c-rule);
+}
+/* Phones: the number is a small kicker above the title, not a column. */
+.ways__num { font-size: var(--fs-caption); font-weight: 600; color: var(--c-muted); font-variant-numeric: tabular-nums; }
+.ways__body { color: var(--c-ink-2); max-width: 34em; }
+.ways__cta { margin-top: var(--s-1); }
+@media (min-width: 1024px) {
+  .ways__item {
+    grid-template-columns: 3rem minmax(0, 5fr) minmax(0, 6fr);
+    column-gap: var(--gutter);
+    row-gap: var(--s-3);
+    align-items: baseline;
+    padding-block: var(--s-6) var(--s-7);
+  }
+  .ways__num { grid-column: 1; grid-row: 1; padding-top: 0.8em; }
+  .ways__title { grid-column: 2; grid-row: 1 / span 2; }
+  .ways__body { grid-column: 3; grid-row: 1; }
+  .ways__cta { grid-column: 3; grid-row: 2; margin-top: 0; }
+}
+
+/* Chinese leads: keep-all must reach the <p> itself (base resets word-break on every :lang(zh) element). */
+:lang(zh) .join-page .page-header__lead p { word-break: keep-all; overflow-wrap: anywhere; }
+
+/* Short Chinese paragraphs: balance the 2–3 lines so none ends on a 2-character line. */
+:lang(zh) .join-page .ways__body { text-wrap: pretty; } /* Pass 1: balance forced 我/们 splits on phones */

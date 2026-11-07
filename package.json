@@ -1,0 +1,46 @@
+{
+  "name": "ucalgary-cgsa-website",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "description": "Official bilingual website of the UCalgary Chinese Graduate Students' Association (CGSA) · 卡尔加里大学中国研究生协会",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs",
+    "build:samples": "VITE_SHOW_PLACEHOLDERS=true vite build --outDir dist-samples && VITE_SHOW_PLACEHOLDERS=true vite build --ssr src/entry-server.tsx --outDir dist-ssr && DIST_DIR=dist-samples VITE_SHOW_PLACEHOLDERS=true node scripts/prerender.mjs",
+    "preview": "vite preview --port 4173 --strictPort",
+    "preview:samples": "npm run build:samples && vite preview --outDir dist-samples --port 4174 --strictPort",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "shots": "node scripts/screenshots.mjs",
+    "og": "node scripts/og-image.mjs",
+    "check": "npm run typecheck && npm run lint && npm run test && npm run build"
+  },
+  "dependencies": {
+    "@fontsource-variable/noto-serif-hk": "^5.3.1",
+    "@fontsource-variable/noto-serif-sc": "^5.3.1",
+    "@fontsource-variable/source-sans-3": "^5.3.1",
+    "@fontsource-variable/source-serif-4": "^5.3.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.2.1",
+    "eslint": "^10.14.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.14.0",
+    "playwright-core": "^1.65.0",
+    "typescript": "~6.0.0",
+    "typescript-eslint": "^8.72.1",
+    "vite": "^8.3.6",
+    "vitest": "^5.1.0"
+  }
+}

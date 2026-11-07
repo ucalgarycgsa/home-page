@@ -1,0 +1,166 @@
+/* Resources (Seat 6). Phone-first: index → emergency numbers → six groups on paper.
+   No rail, no kicker+rule stacks: each group opens with its numbered title (the
+   same number and words as the jump index), a one-line intro, then a hairline list. */
+
+/* — Jump index (in the page header) ———————————————————————— */
+.res-page .jump { margin-top: var(--s-6); }
+.jump__list {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 var(--gutter);
+}
+@media (min-width: 768px) { .jump__list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1280px) { .jump__list { grid-template-columns: repeat(6, auto); justify-content: start; column-gap: var(--s-7); } }
+.jump__link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  min-height: var(--target);
+  padding-block: 0.6rem;
+  text-decoration: none;
+  font-weight: 600;
+}
+:lang(zh) .jump__link { font-weight: 500; }
+.jump__link:hover { text-decoration: underline; text-underline-offset: 0.25em; }
+.jump__num { font-size: var(--fs-caption); font-weight: 500; color: var(--c-muted); font-variant-numeric: tabular-nums; }
+
+/* — Emergency numbers (moved up from group 06) ———————————————— */
+.res-emergency { padding-bottom: clamp(3rem, 2rem + 3vw, 5rem); }
+.phones {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr); /* Gate 4: no content-sized column (text-spacing at 320 px) */
+  gap: 0 var(--gutter);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--c-ink); /* opens the list of numbers */
+  grid-template-areas: 'title' 'body' 'list' 'more';
+}
+@media (min-width: 1024px) {
+  .phones {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-areas:
+      'title title title title title . list list list list list list'
+      'body  body  body  body  body  . list list list list list list'
+      'more  more  more  more  more  . list list list list list list';
+    align-content: start;
+  }
+}
+.phones__title { grid-area: title; display: flex; align-items: baseline; gap: 0.6rem; }
+/* The 911 line keeps its red: a mark, never text or a rule (BOARD_DECISION.md). */
+.phones__dot {
+  width: 0.5em;
+  height: 0.5em;
+  flex: none;
+  border-radius: var(--radius-round);
+  background: var(--c-red);
+  transform: translateY(-0.05em);
+}
+.phones__body { grid-area: body; margin-top: var(--s-2); color: var(--c-ink-2); font-size: var(--fs-small); line-height: var(--lh-tight); max-width: 36em; }
+.phones__list { grid-area: list; margin: var(--s-4) 0 0; display: grid; }
+@media (min-width: 1024px) { .phones__list { margin-top: 0; border-top: 0; } }
+.phones__list > div {
+  display: grid;
+  gap: 0 var(--s-4);
+  padding-block: var(--s-3);
+  border-top: 1px solid var(--c-rule);
+}
+.phones__list > div:last-child { border-bottom: 1px solid var(--c-rule); }
+@media (min-width: 1024px) { .phones__list > div:first-child { border-top: 0; padding-top: 0; } }
+@media (min-width: 768px) { .phones__list > div { grid-template-columns: minmax(0, 1fr) auto; align-items: center; } }
+.phones__list dt { font-size: var(--fs-small); line-height: var(--lh-tight); color: var(--c-ink-2); }
+.phones__list dd { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-1) var(--s-4); } /* Gate 4: never clipped under text spacing */
+.phones__list > div { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 768px) { .phones__list > div { grid-template-columns: minmax(0, 1fr) auto; } }
+.phones__num {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target);
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 540;
+  letter-spacing: -0.005em;
+  text-decoration: none;
+  font-variant-numeric: lining-nums tabular-nums;
+  white-space: nowrap;
+}
+.phones__num:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+.phones__source { display: inline-flex; align-items: center; min-height: var(--target); min-width: var(--target); }
+.phones__more { grid-area: more; margin-top: var(--s-4); }
+
+/* — Groups ——————————————————————————————————————————————— */
+.res-group { padding-bottom: clamp(3rem, 2rem + 3vw, 5rem); scroll-margin-top: calc(var(--header-h) + 0.5rem); }
+.res-group__head { display: grid; gap: var(--s-2); margin-bottom: var(--s-5); }
+.res-group__title { display: flex; align-items: baseline; gap: 0.5em; }
+.res-group__num {
+  flex: none;
+  font-family: var(--font-sans);
+  font-size: var(--fs-label);
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--c-muted);
+  font-variant-numeric: tabular-nums;
+  transform: translateY(-0.15em);
+}
+.res-group__intro { color: var(--c-ink-2); font-size: var(--fs-body-l); line-height: var(--lh-body-l); max-width: 34em; }
+:lang(zh) .res-group__intro .seg { white-space: nowrap; }
+
+/* Link rows: compact on phones (title, then "note · source" on one run). */
+.res-links { margin: 0; border-top: 1px solid var(--c-rule); }
+.res-links__item {
+  position: relative;
+  display: block;
+  padding: 0.7rem 2.25rem 0.75rem 0;
+  border-bottom: 1px solid var(--c-rule);
+  text-decoration: none;
+  font-size: var(--fs-small);
+  line-height: var(--lh-tight);
+}
+.res-links__title {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: clamp(1.125rem, 1.07rem + 0.24vw, 1.3125rem); /* 18 → 21 */
+  line-height: 1.25;
+  font-weight: var(--fw-h3);
+  margin-bottom: 0.15rem;
+}
+.res-links__note { color: var(--c-ink-2); font-size: var(--fs-small); line-height: var(--lh-tight); }
+.res-links__source { color: var(--c-muted); font-size: var(--fs-caption); line-height: var(--lh-tight); white-space: nowrap; }
+.res-links__source::before { content: ' · ' / ''; }
+.res-links__note, .res-links__source { display: inline; }
+.res-links__arrow {
+  position: absolute;
+  right: 0.25rem;
+  top: 50%;
+  translate: 0 -50%;
+  transition: transform var(--dur) var(--ease);
+}
+.res-links__item:hover .res-links__title { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+.res-links__item:hover .res-links__arrow { transform: translate(2px, -2px); }
+
+@media (min-width: 1024px) {
+  .res-links__item {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 5fr) minmax(0, 2fr) 1.5rem;
+    grid-template-areas: 'title note source arrow';
+    column-gap: var(--gutter);
+    align-items: baseline;
+    padding: var(--s-4) 0;
+  }
+  .res-links__title { grid-area: title; }
+  .res-links__note { grid-area: note; display: block; margin: 0; }
+  .res-links__source { grid-area: source; display: block; white-space: normal; }
+  .res-links__source::before { content: none; }
+  .res-links__arrow { grid-area: arrow; position: static; translate: none; justify-self: end; }
+}
+
+/* — Footnote ——————————————————————————————————————————————— */
+.res-footnote-wrap { padding-top: 0; }
+.res-footnote { display: grid; gap: var(--s-2); justify-items: start; }
+
+/* Chinese leads: keep-all must reach the <p> itself (base resets word-break on every :lang(zh) element). */
+:lang(zh) .res-page .page-header__lead p { word-break: keep-all; overflow-wrap: anywhere; }
+/* Chinese source names never split (卡爾 / 加里大學). */
+:lang(zh) .res-links__source { word-break: keep-all; }
+
+/* Short Chinese paragraph: balance so it never ends on a 2-character line. */
+:lang(zh) .res-page .phones__body { text-wrap: balance; }

@@ -1,0 +1,14 @@
+/* 404 (Seat 6) */
+.notfound-page .page-header { padding-bottom: var(--section-y); }
+/* The lead is two short sentences: balance the lines so no 2–3 character line is
+   left on its own (e.g. "这些：" at 390); keep-all comes from base. */
+.notfound-page__lead { text-wrap: balance; }
+:lang(zh) .notfound-page .page-header__lead { max-width: 22em; }
+.notfound-page__home { margin-top: var(--s-6); }
+.notfound-links { margin: var(--s-5) 0 0; display: flex; flex-wrap: wrap; gap: var(--s-1) var(--s-6); }
+@media (max-width: 479px) {
+  .notfound-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--gutter); }
+}
+
+/* Chinese leads: keep-all must reach the <p> itself (base resets word-break on every :lang(zh) element). */
+:lang(zh) .notfound-page .page-header__lead p { word-break: keep-all; overflow-wrap: anywhere; }

@@ -1,0 +1,29 @@
+/* Section + page header (Lead-owned). No rail: content starts at column 1. */
+.section__inner { display: grid; row-gap: 0; }
+.section__inner--opener { position: relative; }
+.section__inner--opener::before {
+  content: '';
+  display: block;
+  height: 0;
+  border-top: var(--rule-open) solid var(--c-ink);
+  margin-bottom: var(--s-5);
+}
+.tone-ink .section__inner--opener::before { border-top-color: var(--c-on-ink); }
+
+.section__kicker { color: var(--c-muted); margin-bottom: var(--s-4); }
+.tone-ink .section__kicker { color: var(--c-on-ink-muted); }
+.section__aside { margin-bottom: var(--s-6); }
+
+.section__title { margin-bottom: var(--s-6); max-width: 18em; }
+:lang(zh) .section__title { max-width: 16em; }
+.section__body { max-width: var(--measure); color: var(--c-ink-2); }
+.tone-ink .section__body { color: var(--c-on-ink-muted); }
+.section__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-4) var(--s-6); margin-top: var(--s-6); }
+
+/* Page header (sub-pages) */
+.page-header { padding-block: clamp(2.5rem, 1.2rem + 5vw, 6.5rem) clamp(1.5rem, 0.5rem + 3vw, 3.5rem); }
+.page-header + .section.tone-paper { padding-top: clamp(2.5rem, 1.5rem + 3vw, 4.5rem); }
+.page-header__label { color: var(--c-muted); margin-bottom: var(--s-4); }
+.page-header__main { max-width: 100%; }
+.page-header__lead { margin-top: var(--s-5); color: var(--c-ink-2); max-width: var(--measure-wide); }
+:lang(zh) .page-header__lead { word-break: keep-all; overflow-wrap: anywhere; max-width: var(--measure); }

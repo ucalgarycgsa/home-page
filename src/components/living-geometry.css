@@ -1,0 +1,30 @@
+/* Living geometry (homepage hero). Colours from tokens only; hairlines stay 1px at any size. */
+.geo {
+  position: relative;
+  width: var(--geo-size, 320px);
+  aspect-ratio: 1;
+  pointer-events: none;
+  user-select: none;
+}
+.geo__layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+.geo__line {
+  fill: none;
+  stroke: var(--c-muted);
+  stroke-opacity: 0.5;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.geo__line--faint { stroke: var(--c-rule); stroke-opacity: 1; }
+.geo__red { fill: var(--c-red); }
+.geo__red--ring { fill: none; stroke: var(--c-red); stroke-width: 1.3; }
+@media (prefers-reduced-motion: reduce) {
+  .geo__layer { will-change: auto; transform: none !important; }
+}

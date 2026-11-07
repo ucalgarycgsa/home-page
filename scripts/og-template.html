@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<style>
+  @font-face { font-family: 'Serif'; src: url('../node_modules/@fontsource-variable/source-serif-4/files/source-serif-4-latin-opsz-normal.woff2') format('woff2'); font-weight: 200 900; }
+  @font-face { font-family: 'Sans'; src: url('../node_modules/@fontsource-variable/source-sans-3/files/source-sans-3-latin-wght-normal.woff2') format('woff2'); font-weight: 200 900; }
+  html, body { margin: 0; }
+  body { width: 1200px; height: 630px; background: #faf7f2; color: #1c1a19; position: relative; overflow: hidden; font-family: 'Sans', sans-serif; }
+  .ring { position: absolute; right: -170px; top: -60px; width: 640px; height: 640px; }
+  .wrap { position: absolute; left: 80px; top: 72px; right: 80px; bottom: 64px; display: flex; flex-direction: column; }
+  .seal { width: 96px; height: 96px; }
+  h1 { font-family: 'Serif', serif; font-weight: 480; font-size: 104px; line-height: 0.96; letter-spacing: -0.028em; margin: 44px 0 0; }
+  h1 span { color: #d33835; }
+  .zh { font-family: 'Noto Serif SC', 'Songti SC', serif; font-weight: 600; font-size: 30px; letter-spacing: 0.12em; margin-top: auto; }
+  .en { font-size: 20px; color: #45403b; margin-top: 10px; letter-spacing: 0.01em; }
+</style>
+</head>
+<body>
+  <svg class="ring" viewBox="0 0 1000 1000"><circle cx="500" cy="500" r="470" fill="none" stroke="#1c1a19" stroke-opacity=".16" stroke-width="2.4"/><circle cx="500" cy="500" r="452" fill="none" stroke="#1c1a19" stroke-opacity=".1" stroke-width="2.4"/><circle cx="85" cy="279" r="15" fill="#d33835"/></svg>
+  <div class="wrap">
+    <img class="seal" src="../public/brand/cgsa-logo-transparent.png" alt="" />
+    <h1>Connect<span>.</span> Grow<span>.</span><br />Belong<span>.</span></h1>
+    <div class="zh">卡尔加里大学中国研究生协会</div>
+    <div class="en">UCalgary Chinese Graduate Students’ Association</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,207 @@
+/* ==========================================================================
+   UCalgary CGSA — design tokens (Art Direction phase, LOCKED at Gate 2; Lead-owned)
+   Decision record: BOARD_DECISION.md · type system: research/art/TYPE_SYSTEM.md
+   Breakpoints (CSS media queries can't read variables):
+     sm 480 · md 768 · lg 1024 · xl 1280 · xxl 1440
+   ========================================================================== */
+
+:root {
+  /* — Colour ———————————————————————————————————————————————— */
+  --c-red: #d33835;        /* CGSA red (seal ink). "Here, now" only. Text ≥ 24px (18.66 bold) or marks. 4.48:1 on paper. */
+  --c-red-deep: #b42b28;   /* Small red text. 5.9:1 on paper. */
+  --c-paper: #faf7f2;      /* Warm white — the ground. */
+  --c-white: #ffffff;
+  --c-stone: #efe9df;      /* The two highlight plates (Events, Benefits) and the footer only. */
+  --c-stone-2: #e3dbcf;    /* Rules on stone. Never a text ground for muted text. */
+  --c-mist: #e8ecea;       /* Empty photo plates only (hidden in production). */
+  --c-ink: #1c1a19;        /* Text, the one filled button, 3px opening rules. 16.2:1 on paper. */
+  --c-ink-2: #45403b;      /* Secondary text. 9.6:1 on paper. */
+  --c-muted: #645c54;      /* Captions, meta. 6.1:1 on paper, 5.2:1 on stone. */
+  --c-rule: #d9d1c5;       /* 1px hairline on paper. */
+  --c-rule-strong: #1c1a19;
+  --c-gold: #9c7a35;       /* One hairline above the footer tagline. Never text. */
+  --c-on-ink: #faf7f2;
+  --c-on-ink-muted: #c9c1b6; /* 9.7:1 on ink. */
+
+  /* — Type families ————————————————————————————————————————— */
+  /* English. Chinese locales redefine both below (Latin-first via the alias faces). */
+  /* Chinese inside English text (e.g. a bilingual name) falls back to the Chinese
+     serif, not a heavier system sans (Gate 4, M4). Subsets load only if used. */
+  --font-serif: 'Source Serif 4 Variable', 'Noto Serif SC Variable', Georgia, 'Times New Roman', 'Songti SC', serif;
+  --font-sans: 'Source Sans 3 Variable', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, 'PingFang SC',
+    'Microsoft YaHei', sans-serif;
+  /* For Chinese runs inside any page (lockup line, switch labels). Script-specific
+     values are set per element by :lang(zh-Hans) / :lang(zh-Hant) below. */
+  --font-cjk-serif: 'CGSA Latin Serif', 'Noto Serif SC Variable', 'Source Han Serif SC', 'Noto Serif CJK SC',
+    'Songti SC', 'STSong', 'SimSun', serif;
+  --font-cjk-sans: 'CGSA Latin Sans', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei',
+    'Source Han Sans SC', 'Noto Sans CJK SC', 'Noto Sans SC', system-ui, sans-serif;
+
+  /* — Type scale: ENGLISH (390 → 1440 endpoints exact) ——————————— */
+  --fs-display: clamp(3.5rem, 1.829rem + 6.857vw, 8rem);        /* 56 → 128 */
+  --fs-title-xl: var(--fs-display);
+  --fs-h1: clamp(2.5rem, 1.757rem + 3.048vw, 4.5rem);            /* 40 → 72 */
+  --fs-title-l: var(--fs-h1);
+  --fs-h2: clamp(1.875rem, 1.457rem + 1.714vw, 3rem);            /* 30 → 48 */
+  --fs-h3: clamp(1.25rem, 1.111rem + 0.571vw, 1.625rem);         /* 20 → 26 */
+  --fs-body-l: clamp(1.125rem, 1.055rem + 0.286vw, 1.3125rem);   /* 18 → 21 */
+  --fs-body: 1.0625rem;   /* 17 */
+  --fs-small: 0.9375rem;  /* 15 */
+  --fs-caption: 0.875rem; /* 14 — the meta floor (Seat 7, Gate 4) */
+  --fs-label: 0.875rem;   /* 14, sentence case */
+  --fs-nav: 0.9375rem;    /* 15, sentence case */
+
+  --lh-display: 0.95;
+  --lh-h1: 1.04;
+  --lh-h2: 1.1;
+  --lh-h3: 1.25;
+  --lh-body-l: 1.5;
+  --lh-body: 1.6;
+  --lh-tight: 1.5;
+  --lh-caption: 1.45;
+
+  --ls-display: -0.03em;
+  --ls-h1: -0.022em;
+  --ls-h2: -0.014em;
+  --ls-h3: -0.006em;
+  --ls-body: 0;
+  --ls-label: 0.01em;
+  --ls-nav: 0;
+
+  --fw-display: 480;
+  --fw-h1: 500;
+  --fw-h2: 520;
+  --fw-h3: 540;
+  --fw-heading: var(--fw-h2); /* legacy alias */
+  --fw-label: 600;
+  --label-transform: none;    /* Uppercase is reserved for EN dates (the date seal). */
+
+  /* — Space (4-pt base) ———————————————————————————————————— */
+  --s-1: 0.25rem;  --s-2: 0.5rem;  --s-3: 0.75rem;  --s-4: 1rem;
+  --s-5: 1.5rem;   --s-6: 2rem;    --s-7: 3rem;     --s-8: 4rem;
+  --s-9: 6rem;     --s-10: 8rem;   --s-11: 11rem;
+  --section-y: clamp(3.5rem, 2rem + 6vw, 8rem);   /* 56 → 128 */
+
+  /* — Grid ———————————————————————————————————————————————— */
+  --max: 1320px;
+  --margin: clamp(1.25rem, 0.4rem + 4vw, 4.5rem); /* 20 → 72 */
+  --gutter: clamp(1rem, 0.6rem + 1.4vw, 2rem);    /* 16 → 32 */
+  --cols: 12;
+  --col: calc((min(100vw, var(--max) + 2 * var(--margin)) - 2 * var(--margin) - 11 * var(--gutter)) / 12);
+  --measure: 34em;        /* body text */
+  --measure-zh: 30em;
+  --measure-wide: 46em;   /* leads next to nothing */
+
+  /* — Shape: square. Circles only for the seal and the drawn hero stop. — */
+  --radius-0: 0;
+  --radius-s: 0;
+  --radius-round: 50%;
+  --rule: 1px;            /* hairline: separates items */
+  --rule-open: 3px;       /* ink rule: opens a highlight */
+
+  /* — Motion: only state moves. Nothing on entry, scroll or loop. —— */
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --dur-fast: 140ms;      /* colour, underline */
+  --dur: 200ms;           /* menu, state changes */
+  --dur-slow: 240ms;      /* a loaded image fading in */
+
+  /* — Layers / sizes ———————————————————————————————————————— */
+  --header-h: 4.5rem;
+  --target: 44px;
+  --z-header: 50;
+  --z-menu: 60;
+}
+
+/* — SIMPLIFIED CHINESE (zh-Hans): own scale, not scaled EN ————————— */
+:root:lang(zh) {
+  --font-serif: 'CGSA Latin Serif', 'Noto Serif SC Variable', 'Source Han Serif SC', 'Noto Serif CJK SC',
+    'Songti SC', 'STSong', 'SimSun', serif;
+  --font-sans: 'CGSA Latin Sans', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei',
+    'Source Han Sans SC', 'Noto Sans CJK SC', 'Noto Sans SC', system-ui, sans-serif;
+
+  --fs-title-xl: clamp(4.75rem, 3.171rem + 6.476vw, 9rem);   /* 76 → 144: hero words, ≤ 4 字 */
+  --fs-display: clamp(3rem, 1.607rem + 5.714vw, 6.75rem);    /* 48 → 108 */
+  --fs-title-l: clamp(3rem, 2.071rem + 3.81vw, 5.5rem);      /* 48 → 88: short page titles */
+  --fs-h1: clamp(2.125rem, 1.521rem + 2.476vw, 3.75rem);     /* 34 → 60 */
+  --fs-h2: clamp(1.625rem, 1.3rem + 1.333vw, 2.5rem);        /* 26 → 40 */
+  --fs-h3: clamp(1.1875rem, 1.095rem + 0.381vw, 1.4375rem);  /* 19 → 23 */
+  --fs-body-l: clamp(1.0625rem, 0.993rem + 0.286vw, 1.25rem);/* 17 → 20 */
+  --fs-body: 1rem;        /* 16 */
+  --fs-small: 0.9375rem;  /* 15 */
+  --fs-caption: 0.875rem; /* 14 */
+  --fs-label: 0.875rem;   /* 14 */
+  --fs-nav: 0.9375rem;    /* 15 */
+
+  --lh-display: 1.18;
+  --lh-h1: 1.3;
+  --lh-h2: 1.4;
+  --lh-h3: 1.5;
+  --lh-body-l: 1.8;
+  --lh-body: 1.85;
+  --lh-tight: 1.7;
+  --lh-caption: 1.6;
+
+  --ls-display: 0.01em;
+  --ls-h1: 0.01em;
+  --ls-h2: 0.01em;
+  --ls-h3: 0.02em;
+  --ls-body: 0.02em;
+  --ls-label: 0.06em;
+  --ls-nav: 0.04em;
+
+  --fw-display: 500;
+  --fw-h1: 500;
+  --fw-h2: 500;
+  --fw-h3: 540;
+  --fw-label: 500;
+
+  --measure: var(--measure-zh);
+}
+
+/* — TRADITIONAL CHINESE (zh-Hant, Hong Kong usage) ——————————————————
+   :lang(zh) above already matches zh-Hant, so 繁體 inherits the Chinese sizes.
+   Families change (HK glyph forms); 繁體 glyphs carry ~20% more strokes, so
+   headings go a touch lighter and lines get a little more air. */
+:root:lang(zh-Hant) {
+  --font-serif: 'CGSA Latin Serif', 'Noto Serif HK Variable', 'Source Han Serif HC', 'Noto Serif CJK HK',
+    'Songti TC', 'MingLiU_HKSCS', 'PMingLiU', serif;
+  --font-sans: 'CGSA Latin Sans', 'PingFang HK', 'PingFang TC', 'Microsoft JhengHei UI', 'Microsoft JhengHei',
+    'Source Han Sans HC', 'Noto Sans CJK HK', 'Noto Sans HK', 'Noto Sans CJK TC', system-ui, sans-serif;
+
+  --lh-display: 1.22;
+  --lh-h1: 1.34;
+  --lh-h2: 1.44;
+  --lh-h3: 1.55;
+  --lh-body-l: 1.85;
+  --lh-body: 1.9;
+  --lh-tight: 1.75;
+  --lh-caption: 1.65;
+
+  --fw-display: 470;
+  --fw-h1: 470;
+  --fw-h2: 480;
+  --fw-h3: 520;
+}
+
+/* Chinese runs on any page pick their script's faces (e.g. the 简体 switch
+   button on a 繁體 page, or the lockup line on an English page). */
+:lang(zh-Hans) {
+  --font-cjk-serif: 'CGSA Latin Serif', 'Noto Serif SC Variable', 'Source Han Serif SC', 'Noto Serif CJK SC',
+    'Songti SC', 'STSong', 'SimSun', serif;
+  --font-cjk-sans: 'CGSA Latin Sans', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei',
+    'Source Han Sans SC', 'Noto Sans CJK SC', 'Noto Sans SC', system-ui, sans-serif;
+}
+:lang(zh-Hant) {
+  --font-cjk-serif: 'CGSA Latin Serif', 'Noto Serif HK Variable', 'Source Han Serif HC', 'Noto Serif CJK HK',
+    'Songti TC', 'MingLiU_HKSCS', 'PMingLiU', serif;
+  --font-cjk-sans: 'CGSA Latin Sans', 'PingFang HK', 'PingFang TC', 'Microsoft JhengHei UI', 'Microsoft JhengHei',
+    'Source Han Sans HC', 'Noto Sans CJK HK', 'Noto Sans HK', 'Noto Sans CJK TC', system-ui, sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur: 0ms;
+    --dur-slow: 0ms;
+  }
+}

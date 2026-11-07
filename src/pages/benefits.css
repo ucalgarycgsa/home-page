@@ -1,0 +1,115 @@
+/* ==========================================================================
+   Benefits page (Seat 5). A highlight:
+   promise (the page's Full-Measure Line) + lead + the filled CTA in the first screen
+   → stone plate: what it is + the pass facts as a museum label (Valid first)
+   → who it's for (hairline list) → how to get it (3 steps) → questions.
+   No ticket, stamp or circle: nothing that could pass for the real e-ticket.
+   ========================================================================== */
+
+/* — The promise ———————————————————————————————————————————————— */
+.benefits-page .page-header { padding-bottom: clamp(2.5rem, 1rem + 4vw, 5rem); }
+/* Scoped: base.css (.fit, .t-display) loads after page CSS. */
+.benefits-page .benefits-title {
+  --fit-min: 48;
+  --fit-max: 152;
+  line-height: 0.98;
+  color: var(--c-ink);
+}
+:lang(zh) .benefits-page .benefits-title { line-height: 1.16; }
+:lang(zh-Hant) .benefits-page .benefits-title { line-height: 1.2; }
+/* Chrome honours <wbr> even inside FitLine's nowrap measuring box, so a Chinese
+   promise wider than the container measured as two lines (768–1024). Segments are
+   inline-blocks, so the fitted line needs no explicit break opportunity. */
+.benefits-page .benefits-title.is-fitted wbr { display: none; }
+/* Phones (not fitted): one phrase per line, sized so the longest phrase fits. */
+@media (max-width: 767px) {
+  .benefits-page .benefits-title { font-size: min(3.25rem, calc((100vw - 2 * var(--margin)) / 8.7)); }
+  .benefits-title__phrase { display: block; }
+  :lang(zh) .benefits-page .benefits-title { font-size: min(3.5rem, calc((100vw - 2 * var(--margin)) / 6.3)); }
+  /* Headline segments (一卡通在手，| 全年享优惠。) become one line each. */
+  :lang(zh) .benefits-title .seg { display: block; white-space: normal; word-break: keep-all; overflow-wrap: anywhere; }
+  .benefits-title wbr { display: none; } /* else the break opportunity between blocks makes an empty line */
+}
+
+.benefits-page .page-header__lead { margin-top: var(--s-5); }
+@media (min-width: 768px) { .benefits-page .page-header__lead { margin-top: var(--s-6); } }
+.benefits-actions { margin-top: var(--s-6); gap: var(--s-3) var(--s-6); }
+.benefits-actions .page-header__note { color: var(--c-muted); }
+@media (max-width: 479px) {
+  .benefits-actions { margin-top: var(--s-5); }
+}
+
+/* — The plate: what it is + the museum label ————————————————————— */
+.benefits-plate__grid { display: grid; gap: var(--s-7) var(--gutter); }
+.benefits-plate__title { margin-bottom: var(--s-5); max-width: 16em; }
+:lang(zh) .benefits-plate__title { max-width: 13em; }
+.benefits-plate__body { max-width: var(--measure); color: var(--c-ink-2); }
+
+.pass-label { margin: 0; border-top: 1px solid var(--c-ink); align-self: start; }
+.pass-label__row {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: var(--s-1) var(--s-4);
+  padding-block: var(--s-4);
+  border-bottom: 1px solid var(--c-stone-2);
+}
+:lang(zh) .pass-label__row { grid-template-columns: 4.5rem minmax(0, 1fr); }
+.pass-label__k { color: var(--c-muted); padding-top: 0.2em; }
+.pass-label__v {
+  margin: 0;
+  font-size: var(--fs-body-l);
+  line-height: var(--lh-tight);
+  font-weight: 560;
+  letter-spacing: 0.005em;
+  color: var(--c-ink);
+}
+:lang(zh) .pass-label__v { letter-spacing: 0.02em; }
+
+@media (min-width: 1024px) {
+  .benefits-plate__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .benefits-plate__text { grid-column: 1 / span 6; }
+  .pass-label { grid-column: 8 / -1; }
+  .pass-label__row { grid-template-columns: 7.5rem minmax(0, 1fr); }
+  :lang(zh) .pass-label__row { grid-template-columns: 5.5rem minmax(0, 1fr); }
+}
+
+/* — Who it's for ——————————————————————————————————————————————— */
+.benefits-split { display: grid; gap: var(--s-6) var(--gutter); }
+.benefits-split__title { max-width: 14em; }
+:lang(zh) .benefits-split__title { max-width: 12em; }
+@media (min-width: 1024px) {
+  .benefits-split { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .benefits-split__title { grid-column: 1 / span 5; }
+  .benefits-split__list { grid-column: 7 / -1; }
+}
+
+/* — How to get it ——————————————————————————————————————————————— */
+.benefits-how.section { padding-top: 0; }
+.benefits-how__title { margin-bottom: var(--s-6); }
+.benefits-how__actions { margin-top: var(--s-7); }
+.benefits-questions__title { font-size: var(--fs-body); font-weight: 650; line-height: var(--lh-tight); font-family: var(--font-sans); }
+
+/* The plate opens soon after the CTA: the facts are the next thing to read. */
+.benefits-plate.section { padding-block: clamp(2.5rem, 1rem + 4vw, 5.5rem) clamp(3rem, 1.4rem + 5vw, 7rem); }
+.benefits-plate .section__inner--opener::before { margin-bottom: var(--s-4); }
+
+/* Tablets (768–1023): three columns are too narrow for the step titles, so the
+   steps read as a list: ink numeral left, title and text right. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .benefits-how .steps { grid-template-columns: 1fr; border-top: 1px solid var(--c-ink); }
+  .benefits-how .steps__item {
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    column-gap: var(--gutter);
+    border-top: 0;
+    border-bottom: 1px solid var(--c-rule);
+  }
+  .benefits-how .steps__num { grid-row: 1 / span 2; }
+  .benefits-how .steps__item > :not(.steps__num) { grid-column: 2; max-width: var(--measure); }
+}
+
+/* Chinese: short notes and label values break only at punctuation and spaces, so
+   words and names (一卡通, 合作商家) never split. Long body text keeps normal breaking. */
+:lang(zh) :is(.benefits-actions .page-header__note, .benefits-plate__body, .pass-label__v, .benefits-split__list li, .benefits-how .steps__body, .benefits-questions p) {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}

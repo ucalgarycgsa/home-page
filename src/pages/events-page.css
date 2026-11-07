@@ -1,0 +1,117 @@
+/* ==========================================================================
+   Events page (Seat 5). A highlight: header → stone plate → how → types → past.
+   ========================================================================== */
+
+/* Header and plate read as one move: the plate starts soon after the lead. */
+.events-page .page-header { padding-bottom: clamp(2rem, 1rem + 3vw, 4rem); }
+.events-plate.section { padding-block: clamp(1.75rem, 0.6rem + 4.5vw, 5.5rem) clamp(3rem, 1.6rem + 5vw, 7rem); }
+.events-plate .section__inner--opener::before { margin-bottom: var(--s-4); }
+/* The filter row scrolls; its unwrapped width must not widen the plate. */
+.events-plate .section__body-wrap { min-width: 0; }
+
+/* — Filters: one row of text buttons; scrolls sideways if it must, never wraps.
+   Selection is an ink underline (≤ 200 ms); colour on hover/focus (140 ms). —— */
+.event-filters {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0 var(--s-5);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  /* Room for the 3 px-offset focus ring inside the scroll box. */
+  margin: -6px -6px var(--s-6);
+  padding: 6px;
+}
+.event-filters::-webkit-scrollbar { display: none; }
+@media (max-width: 767px) {
+  /* Phones: the filters wrap onto a second row rather than hide behind an
+     unmarked horizontal scroll (Gate 4, m4) — every option stays visible. */
+  .event-filters { flex-wrap: wrap; overflow-x: visible; gap: 0 var(--s-4); }
+}
+.event-filters__btn {
+  flex: none;
+  min-height: var(--target);
+  padding: 0 0.125rem;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  cursor: pointer;
+  font-size: var(--fs-small);
+  font-weight: 560;
+  color: var(--c-ink-2);
+  white-space: nowrap;
+  transition:
+    color var(--dur-fast) var(--ease),
+    border-bottom-color var(--dur) var(--ease);
+}
+.event-filters__btn { min-width: var(--target); justify-content: center; } /* WCAG 2.5.8: "All" was 20 px wide */
+.event-filters__btn:hover { color: var(--c-ink); border-bottom-color: var(--c-stone-2); }
+.event-filters__btn[aria-pressed='true'] { color: var(--c-ink); border-bottom-color: var(--c-ink); }
+
+/* — The other upcoming events, under the featured one —————————————— */
+.events-plate__list { margin-top: var(--s-8); }
+
+/* — A filter with no results ——————————————————————————————————— */
+.events-filtered-empty { display: grid; justify-items: start; gap: var(--s-4); padding-top: var(--s-5); border-top: 1px solid var(--c-ink); }
+.events-filtered-empty__text { max-width: 24em; }
+.events-filtered-empty__reset { background: none; border: 0; border-bottom: 1px solid currentColor; cursor: pointer; padding-inline: 0; color: var(--c-ink); }
+
+/* — How registration works: three steps, ink numerals, hairlines ———————— */
+.events-how__title { margin-bottom: var(--s-6); max-width: 18em; }
+
+/* — Event types: heading left, a hairline list right ————————————————— */
+.events-types.section { padding-top: 0; }
+.events-types__grid { display: grid; gap: var(--s-6) var(--gutter); }
+.events-types__kicker { color: var(--c-muted); margin-bottom: var(--s-4); }
+.events-types__list { margin: 0; border-top: 1px solid var(--c-ink); }
+.events-types__item {
+  display: grid;
+  gap: var(--s-1) var(--gutter);
+  padding-block: var(--s-4) var(--s-5);
+  border-bottom: 1px solid var(--c-rule);
+}
+.events-types__item dd { margin: 0; color: var(--c-ink-2); max-width: var(--measure); }
+@media (min-width: 1024px) {
+  .events-types__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .events-types__head { grid-column: 1 / span 4; }
+  .events-types__list { grid-column: 6 / -1; }
+  .events-types__item { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: baseline; }
+}
+
+/* — Past events: quieter, after everything else ——————————————————— */
+.events-past.section { padding-top: 0; }
+.events-past__title { margin-bottom: var(--s-4); color: var(--c-ink-2); }
+
+/* Tablets (768–1023): three columns are too narrow for the step titles, so the
+   steps read as a list: ink numeral left, title and text right. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .events-how .steps { grid-template-columns: 1fr; border-top: 1px solid var(--c-ink); }
+  .events-how .steps__item {
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    column-gap: var(--gutter);
+    border-top: 0;
+    border-bottom: 1px solid var(--c-rule);
+  }
+  .events-how .steps__num { grid-row: 1 / span 2; }
+  .events-how .steps__item > :not(.steps__num) { grid-column: 2; max-width: var(--measure); }
+}
+
+/* Chinese: short notes break only at punctuation and spaces (words never split). */
+:lang(zh) :is(.events-how .steps__body, .events-types__item dd, .events-filtered-empty__text) {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+/* "How events are labelled" + steps on stone (moved from team.css by the Lead) */
+.types { margin: 0; display: grid; border-top: 1px solid var(--c-ink); }
+@media (min-width: 768px) { .types { grid-template-columns: 1fr 1fr; column-gap: var(--gutter); } }
+.types__item { display: grid; gap: var(--s-2); padding-block: var(--s-4) var(--s-5); border-bottom: 1px solid var(--c-rule); }
+.types__item dd { margin: 0; color: var(--c-ink-2); font-size: var(--fs-small); line-height: var(--lh-tight); }
+.tone-stone .steps__item { border-color: var(--c-stone-2); }
+@media (min-width: 768px) { .tone-stone .steps__item { border-top-color: var(--c-ink); } }
+
+/* Gate 4: a tighter page header on phones so the stone plate starts higher. */
+@media (max-width: 479px) {
+  .events-page .page-header { padding-block: var(--s-6) var(--s-4); }
+  .events-plate.has-events .event-filters { margin-bottom: var(--s-4); }
+}

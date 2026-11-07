@@ -1,0 +1,44 @@
+/* About (Seat 6). Paper only (stone is reserved for the Events/Benefits highlights). */
+.about-page .page-header__actions { margin-top: var(--s-6); }
+
+/* Mission: the quiet hero. The seal at display size, no ring, never cropped. */
+.about-mission__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  column-gap: var(--gutter);
+  row-gap: var(--s-6);
+  align-items: start;
+}
+.about-mission__seal, .about-mission__text { grid-column: 1 / -1; }
+.about-mission__seal .seal { width: clamp(112px, 72px + 10vw, 220px); height: auto; }
+@media (min-width: 1024px) {
+  .about-mission__grid { align-items: center; }
+  .about-mission__seal { grid-column: 1 / span 3; }
+  .about-mission__text { grid-column: 5 / -1; }
+}
+.about-mission__lead { max-width: 20em; }
+:lang(zh) .about-mission__lead { max-width: 17em; }
+.about-mission__body { margin-top: var(--s-5); max-width: 34em; color: var(--c-ink-2); }
+
+/* Working together · Who we are: two narrow columns from 1024 px. */
+.about-facts__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-8) var(--gutter);
+}
+@media (min-width: 1024px) {
+  .about-facts__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .about-facts__col:first-child { grid-column: 1 / span 5; }
+  .about-facts__col:last-child { grid-column: 7 / span 6; }
+}
+.about-facts__title { margin-bottom: var(--s-3); }
+.about-facts__body { color: var(--c-ink-2); max-width: var(--measure); font-size: var(--fs-body-l); line-height: var(--lh-body-l); }
+.about-who__note { margin-top: var(--s-4); max-width: var(--measure); }
+.about-facts .section__actions { margin-top: var(--s-5); }
+.about-facts__links { flex-direction: column; align-items: flex-start; gap: var(--s-2); }
+
+/* The team line closes the page. */
+.about-team__title { max-width: 18em; }
+
+/* Chinese leads: keep-all must reach the <p> itself (base resets word-break on every :lang(zh) element). */
+:lang(zh) .about-page .page-header__lead p { word-break: keep-all; overflow-wrap: anywhere; }

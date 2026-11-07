@@ -1,0 +1,97 @@
+/* Footer (Lead-owned). 1440: brand + tagline left, links and contact right.
+   Phones: ≤ 550 px — links in three columns, compact contact rows, no tagline. */
+.site-footer {
+  background: var(--c-stone);
+  color: var(--c-ink);
+  padding-block: var(--s-8) var(--s-6);
+}
+.site-footer__top { row-gap: var(--s-7); }
+.site-footer__brand, .site-footer__col { grid-column: 1 / -1; }
+@media (min-width: 768px) {
+  .site-footer__col { grid-column: span 6; }
+}
+@media (min-width: 1024px) {
+  .site-footer__brand { grid-column: 1 / span 6; }
+  .site-footer__col--explore { grid-column: 7 / span 2; }
+  .site-footer__col:last-child { grid-column: 9 / -1; }
+}
+.site-footer__id { display: flex; gap: var(--s-5); align-items: flex-start; }
+.site-footer__seal { width: 64px; height: 64px; flex: none; } /* lockup size, not a display seal */
+.site-footer__name {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-family: 'Source Serif 4 Variable', Georgia, serif;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  font-weight: 520;
+}
+.site-footer__name.is-zh-first { flex-direction: column-reverse; }
+.site-footer__name.is-zh-first .site-footer__name-en { font-size: 0.9375rem; color: var(--c-ink-2); }
+.site-footer__name.is-zh-first .site-footer__name-zh { font-size: 1.25rem; color: var(--c-ink); font-weight: var(--fw-h1); }
+.seg-keep { display: inline-block; white-space: nowrap; }
+.site-footer__name-zh {
+  font-family: var(--font-cjk-serif);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--c-ink-2);
+}
+.site-footer__head { margin-bottom: var(--s-3); color: var(--c-muted); }
+.site-footer__links { margin: 0; display: grid; gap: 0; }
+.site-footer__links a,
+.site-footer__contact a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  min-height: var(--target);
+  text-decoration: none;
+  color: var(--c-ink);
+}
+.site-footer__links a:hover,
+.site-footer__contact a:hover { text-decoration: underline; text-underline-offset: 0.22em; }
+.site-footer__contact { margin: 0; display: grid; gap: var(--s-3); }
+.site-footer__contact dt { font-size: var(--fs-caption); color: var(--c-muted); }
+.site-footer__contact dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
+.site-footer__contact dd:not(:has(a)) { padding-block: 0.15rem; }
+
+/* The tagline: one gold hairline, under the lockup (left half at 1440). */
+.site-footer__closing {
+  margin-top: var(--s-7);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--c-gold);
+  max-width: 22em;
+  font-family: var(--font-serif);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  letter-spacing: var(--ls-h2);
+  font-weight: var(--fw-h2);
+}
+.site-footer__base {
+  margin-top: var(--s-8); /* Pass 2: the hairline above the disclaimer went; space separates it */
+  display: grid;
+  gap: var(--s-3);
+  font-size: var(--fs-caption);
+  color: var(--c-muted);
+  line-height: 1.6;
+}
+@media (min-width: 1024px) {
+  .site-footer__base { grid-template-columns: 1fr auto; gap: var(--s-8); align-items: end; }
+}
+.site-footer__disclaimer { max-width: 62em; }
+
+/* Phones: a compact footer (the menu already carries every link). */
+@media (max-width: 767px) {
+  .site-footer { padding-block: var(--s-5) var(--s-4); }
+  .site-footer__top { row-gap: var(--s-4); }
+  .site-footer__seal { width: 56px; height: 56px; }
+  .site-footer__id { gap: var(--s-4); align-items: center; }
+  .site-footer__name { font-size: 1.0625rem; }
+  .site-footer__name.is-zh-first .site-footer__name-zh { font-size: 1.125rem; }
+  .site-footer__closing { display: none; }
+  .site-footer__head { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; } /* visually hidden; the nav keeps its label */
+  .site-footer__links { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--s-3); }
+  .site-footer__contact { gap: 0; }
+  .site-footer__contact > div { display: grid; grid-template-columns: 4.5rem 1fr; align-items: center; column-gap: var(--s-3); min-height: var(--target); }
+  .site-footer__base { margin-top: var(--s-5); }
+}

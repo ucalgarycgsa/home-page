@@ -1,0 +1,260 @@
+/* ==========================================================================
+   Base — reset, typography roles, layout primitives (Lead-owned)
+   Load order: main.tsx imports App (and with it every component/page CSS) before
+   tokens.css and base.css, so on EQUAL specificity base.css wins. Page CSS that
+   overrides a base role must be scoped (e.g. `.benefits-page .t-h2`).
+   ========================================================================== */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + 1rem);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+body {
+  margin: 0;
+  background: var(--c-paper);
+  color: var(--c-ink);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-body);
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+/* Set on the root (and on Chinese runs inside English pages) only, so these
+   inherited properties can be overridden by a container — e.g. leads use keep-all
+   and their inner <p> must inherit it, not reset it. */
+:root:lang(zh),
+:root:lang(en) [lang^='zh'] {
+  line-break: strict;           /* no closing punctuation at line start */
+  word-break: normal;
+  overflow-wrap: anywhere;
+  text-autospace: no-autospace; /* the copy already types CJK–Latin spaces */
+}
+
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+button { font: inherit; color: inherit; }
+h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
+ul[role='list'], ol[role='list'] { list-style: none; padding: 0; }
+address { font-style: normal; }
+
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.22em; }
+
+::selection { background: var(--c-ink); color: var(--c-paper); }
+
+/* Focus: always visible for keyboard users, high-contrast on every ground. */
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--c-ink);
+  outline-offset: 3px;
+}
+.tone-ink :focus-visible { outline-color: var(--c-paper); }
+[tabindex='-1']:focus-visible { outline: none; }
+
+/* — Utilities ———————————————————————————————————————————— */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute; left: var(--margin); top: -100px; z-index: 100;
+  padding: 0.75rem 1rem; background: var(--c-ink); color: var(--c-paper);
+  font-weight: 600; text-decoration: none;
+}
+.skip-link:focus { top: 0.75rem; }
+
+/* — Layout ————————————————————————————————————————————— */
+.container {
+  width: 100%;
+  max-width: calc(var(--max) + 2 * var(--margin));
+  margin-inline: auto;
+  padding-inline: var(--margin);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  column-gap: var(--gutter);
+}
+
+.section { padding-block: var(--section-y); }
+.tone-paper + .tone-paper,
+.tone-stone + .tone-stone { padding-top: 0; }
+.tone-paper { background: var(--c-paper); }
+.tone-stone { background: var(--c-stone); }
+.tone-ink { background: var(--c-ink); color: var(--c-on-ink); }
+
+/* Highlight opener: a 3px ink rule. Items inside are separated by 1px hairlines. */
+.opener { border-top: var(--rule-open) solid var(--c-ink); padding-top: var(--s-5); }
+.tone-ink .opener { border-top-color: var(--c-on-ink); }
+
+.rule { border: 0; border-top: var(--rule) solid var(--c-rule); margin: 0; }
+.tone-stone .rule { border-top-color: var(--c-stone-2); }
+
+/* — Type roles ————————————————————————————————————————— */
+.t-title-xl, .t-display, .t-title-l, .t-h1, .t-h2, .t-h3 {
+  font-family: var(--font-serif);
+  text-wrap: balance;
+  font-optical-sizing: auto;
+}
+.t-title-xl, .t-display {
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-display);
+  font-weight: var(--fw-display);
+}
+.t-title-xl { font-size: var(--fs-title-xl); }
+.t-title-l { font-size: var(--fs-title-l); line-height: var(--lh-display); letter-spacing: var(--ls-h1); font-weight: var(--fw-h1); }
+.t-h1 { font-size: var(--fs-h1); line-height: var(--lh-h1); letter-spacing: var(--ls-h1); font-weight: var(--fw-h1); }
+.t-h2 { font-size: var(--fs-h2); line-height: var(--lh-h2); letter-spacing: var(--ls-h2); font-weight: var(--fw-h2); }
+.t-h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); letter-spacing: var(--ls-h3); font-weight: var(--fw-h3); }
+.t-body-l { font-size: var(--fs-body-l); line-height: var(--lh-body-l); }
+.t-body { font-size: var(--fs-body); }
+.t-small { font-size: var(--fs-small); line-height: var(--lh-tight); }
+.t-caption { font-size: var(--fs-caption); line-height: var(--lh-caption); color: var(--c-muted); }
+
+/* Chinese headings — punctuation (BOARD_DECISION.md, revised at Gate 4 after the
+   critic's C1): mid-line ，、 stay FULL-WIDTH in both scripts — half-width made the
+   简体 comma read as a Latin comma and the 繁體 one as an apostrophe. Only a
+   line-start bracket is trimmed, and a headline's final 。 (Headline wraps it in
+   .h-end) is pulled tight so it never leaves a hole at the end. */
+:lang(zh) :is(.t-title-xl, .t-display, .t-title-l, .t-h1, .t-h2, .t-h3) { text-spacing-trim: trim-start; }
+:lang(zh) .h-end { font-feature-settings: 'halt' 1; }
+/* Chinese leads break only at punctuation and spaces, so words and names never split. */
+:lang(zh) :is(.t-body-l, .lead) { word-break: keep-all; overflow-wrap: anywhere; }
+.t-label {
+  font-family: var(--font-sans);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
+  text-transform: var(--label-transform);
+  line-height: 1.4;
+}
+.t-muted { color: var(--c-muted); }
+.tone-ink .t-muted, .tone-ink .t-caption { color: var(--c-on-ink-muted); }
+
+.measure { max-width: var(--measure); }
+.prose > * + * { margin-top: 1em; }
+.prose p { text-wrap: pretty; }
+/* Chinese: avoid one-character last lines everywhere. */
+:lang(zh) :is(p, li, dd, .t-small, .t-caption, .t-body-l) { text-wrap: pretty; }
+p { text-wrap: pretty; }
+
+/* Headline phrase segments: lines may break only between segments. */
+.seg { display: inline-block; white-space: nowrap; }
+:lang(en) .seg { white-space: normal; display: inline; }
+/* Narrow phones: segments become inline so text-spacing overrides can't clip them,
+   but Chinese still breaks only between segments (keep-all + <wbr> in Headline);
+   overflow-wrap is the emergency valve if one segment is wider than the line. */
+@media (max-width: 419px) {
+  .seg { white-space: normal; display: inline; }
+  :lang(zh) .seg { word-break: keep-all; overflow-wrap: anywhere; }
+}
+
+/* — Links & buttons ———————————————————————————————————————— */
+.link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+  transition: text-decoration-color var(--dur-fast) var(--ease);
+}
+.link:hover { text-decoration-color: currentColor; }
+
+.arrow-link {
+  display: inline-flex; align-items: center; gap: 0.5em;
+  min-height: var(--target);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-block: 0.35rem 0.25rem;
+  line-height: 1.2;
+  align-self: flex-start;
+  justify-self: start;
+}
+.arrow-link__arrow { transition: transform var(--dur) var(--ease); }
+.arrow-link:hover .arrow-link__arrow { transform: translateX(4px); }
+.arrow-link[data-external] .arrow-link__arrow { transform: none; }
+.arrow-link[data-external]:hover .arrow-link__arrow { transform: translate(2px, -2px); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.6em;
+  min-height: 48px;
+  padding: 0.75rem 1.4rem;
+  border: 1px solid var(--c-ink);
+  border-radius: 0;
+  background: var(--c-ink); color: var(--c-paper);
+  font-family: var(--font-sans);
+  font-size: var(--fs-small);
+  font-weight: 620;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+.btn:hover { background: #000; }
+.btn--quiet { background: transparent; color: var(--c-ink); }
+.btn--quiet:hover { background: var(--c-ink); color: var(--c-paper); }
+.tone-ink .btn { background: var(--c-paper); color: var(--c-ink); border-color: var(--c-paper); }
+.tone-ink .btn:hover { background: var(--c-white); }
+.tone-ink .btn--quiet { background: transparent; color: var(--c-paper); border-color: color-mix(in srgb, var(--c-paper) 45%, transparent); }
+.tone-ink .btn--quiet:hover { border-color: var(--c-paper); background: transparent; }
+
+/* Phones: the page's one filled button spans the column (thumb-sized target). */
+@media (max-width: 479px) {
+  .btn--block-sm { display: flex; width: 100%; min-height: 54px; }
+}
+
+/* Red: "here, now" only (BOARD_DECISION.md). */
+.red { color: var(--c-red); }
+.red-deep { color: var(--c-red-deep); }
+
+/* Placeholder marking (dev / samples build only). */
+.sample-tag {
+  display: inline-block;
+  padding: 0.15rem 0.45rem;
+  border: 1px dashed var(--c-muted);
+  color: var(--c-ink-2);
+  font: 600 0.6875rem/1.3 var(--font-sans);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: var(--c-paper);
+}
+
+/* — Full-Measure Line (the signature gesture; component: FitLine) ————————
+   Static (prerender, no JS, < 768 px): a display-size heading that wraps.
+   ≥ 768 px with JS: FitLine measures the rendered text after fonts load and sets
+   the font-size so the line fills the measure exactly, between --fit-min and
+   --fit-max (unitless px). If it can't fit at --fit-min, it wraps instead. */
+:where(.fit) {
+  --fit-min: 48;
+  --fit-max: 176;
+  font-family: var(--font-serif);
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-display);
+  font-weight: var(--fw-display);
+  font-optical-sizing: auto;
+  margin: 0;
+}
+:where(.fit__inner) { display: inline; }
+.fit.is-fitted .fit__inner { display: inline-block; white-space: nowrap; }
+/* Chrome still breaks at <wbr> inside nowrap; a fitted line is one line by definition. */
+.fit.is-fitted wbr { display: none; }

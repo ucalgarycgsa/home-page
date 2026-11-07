@@ -1,0 +1,251 @@
+/* ==========================================================================
+   Events components (Seat 5). Used by the Events page and the home board.
+   One framed element: the date seal. Red: the date numeral and "Registration open".
+   Motion: state only (colour 140 ms); nothing on entry or scroll.
+   ========================================================================== */
+
+/* — Date seal: square, ink outline, red numeral, never filled —————————— */
+.date-seal {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  justify-items: center;
+  align-items: center;
+  width: 5.5rem;
+  aspect-ratio: 1;
+  padding: 0.55rem 0.25rem 0.5rem;
+  border: 1px solid var(--c-ink);
+  background: transparent;
+  font-family: var(--font-sans);
+  text-align: center;
+  flex: none;
+}
+.date-seal__month,
+.date-seal__weekday {
+  font-size: 0.875rem; /* 14 — the meta floor (Seat 7, Gate 4) */
+  font-weight: 600;
+  letter-spacing: 0.06em; /* EN dates are the one uppercase register */
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--c-ink-2);
+}
+:lang(zh) .date-seal__month,
+:lang(zh) .date-seal__weekday { font-size: 0.8125rem; letter-spacing: 0.04em; font-weight: 500; text-transform: none; }
+.date-seal__day {
+  font-family: 'Source Serif 4 Variable', Georgia, serif;
+  font-size: 2.5rem;
+  line-height: 1;
+  font-weight: 500;
+  color: var(--c-red);
+  font-variant-numeric: lining-nums;
+}
+.date-seal--l { width: 7.5rem; }
+.date-seal--l .date-seal__day { font-size: 3.5rem; }
+.is-past .date-seal { border-color: var(--c-muted); }
+.is-past .date-seal__day { color: var(--c-muted); }
+
+/* — Tags line: category / status ——————————————————————————————— */
+.event-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0; color: var(--c-ink-2); }
+/* The separator trails its tag (::after), so in a narrow column a wrapped line
+   starts with a tag, never with "/". */
+.event-tags > :not(:last-child):not(.sample-tag)::after { content: '/'; content: '/' / ''; margin-inline: 0.55rem; color: var(--c-muted); }
+.event-tags > .sample-tag { margin-right: 0.55rem; }
+
+/* — Meta: date (a real <time>), time, venue ——————————————————————— */
+.event-meta { margin: 0; display: flex; flex-wrap: wrap; gap: 0.15rem 1.25rem; color: var(--c-ink-2); font-size: var(--fs-small); line-height: var(--lh-tight); }
+.event-meta dd { margin: 0; }
+
+.event-cta__note { font-size: var(--fs-small); color: var(--c-muted); }
+
+/* — Row (lists) ————————————————————————————————————————————
+   Phones: seal and tags share the first line; then the title, meta and the
+   action each run the full width (no two narrow columns).
+   ≥ 768: seal · title block · action on the right. */
+.event-list { border-top: 1px solid var(--c-ink); }
+.event-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: var(--s-4);
+  row-gap: var(--s-3);
+  padding-block: var(--s-5) var(--s-6);
+  border-bottom: 1px solid var(--c-rule);
+}
+.tone-stone .event-row { border-bottom-color: var(--c-stone-2); }
+.event-row > .date-seal { grid-column: 1; grid-row: 1; }
+.event-row__title { max-width: 28em; text-wrap: pretty; }
+.event-row.is-past .event-row__title { color: var(--c-ink-2); }
+
+@media (max-width: 767px) {
+  .event-row > .date-seal { width: 4.75rem; }
+  .event-row > .date-seal .date-seal__day { font-size: 2.25rem; }
+  .event-row__main { display: contents; }
+  .event-row__main > * { grid-column: 1 / -1; }
+  .event-row__main > .event-tags { grid-column: 2; grid-row: 1; align-self: end; }
+  .event-row__main > .event-row__title { margin-top: var(--s-2); }
+  /* The action sits directly under the meta; notes (capacity, partners) follow it. */
+  article.event-row > .event-row__cta { grid-column: 1 / -1; order: 1; }
+  .event-row__main > .t-caption { order: 2; }
+  .event-row__cta:empty { display: none; }
+}
+@media (min-width: 768px) {
+  .event-row {
+    grid-template-columns: auto minmax(0, 1fr) minmax(11rem, auto);
+    column-gap: var(--s-6);
+    align-items: start;
+  }
+  .event-row__main { display: grid; gap: 0.5rem; align-content: start; grid-column: 2; grid-row: 1; }
+  .event-row__cta { grid-column: 3; justify-self: end; text-align: right; }
+}
+
+/* — Featured (home) ——————————————————————————————————————————— */
+.event-feature { display: grid; gap: var(--s-6); border-top: 1px solid var(--c-ink); padding-top: var(--s-6); }
+.event-feature__image { width: 100%; }
+.event-feature__body {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--s-4) var(--s-5);
+  align-items: start;
+}
+.event-feature__head { display: grid; gap: var(--s-3); align-content: start; min-width: 0; }
+.event-feature__title { max-width: 18em; overflow-wrap: anywhere; }
+.event-feature__rest { grid-column: 1 / -1; display: grid; gap: var(--s-4); }
+.event-feature__desc { max-width: var(--measure); color: var(--c-ink-2); }
+.event-feature__cta { margin-top: var(--s-2); }
+@media (max-width: 767px) {
+  /* Same phone composition as the rows: seal + tags, then the title full width. */
+  .event-feature__head { display: contents; }
+  .event-feature__head > .event-tags { grid-column: 2; grid-row: 1; align-self: end; }
+  .event-feature__head > .event-feature__title { grid-column: 1 / -1; }
+  .event-feature__body > .date-seal--l { width: 5.5rem; }
+  .event-feature__body > .date-seal--l .date-seal__day { font-size: 2.5rem; }
+}
+@media (min-width: 768px) { .event-feature__rest { grid-column: 2; } }
+
+/* — Events page: the featured event in the stone plate ——————————————
+   Its date is the page's Full-Measure Line (FitLine ≥ 768 px). */
+.ev-plate { display: grid; grid-template-columns: minmax(0, 1fr); } /* the fitted line must never size its own container */
+.ev-plate__kicker { color: var(--c-muted); margin-bottom: var(--s-3); }
+
+.ev-plate .ev-date {
+  --fit-min: 44;
+  --fit-max: 152;
+  /* Static size (prerender, no JS, phones): one phrase per line. */
+  font-size: clamp(2.375rem, 0.9rem + 7.4vw, 3.5rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  font-weight: 460;
+  font-variant-numeric: lining-nums;
+  color: var(--c-ink);
+}
+:lang(zh) .ev-plate .ev-date { line-height: 1.12; letter-spacing: 0; font-weight: 480; word-break: keep-all; }
+:lang(zh-Hant) .ev-plate .ev-date { font-weight: 460; }
+.ev-date time { display: inline; }
+.ev-date__day { color: var(--c-red); }
+@media (max-width: 767px) {
+  .ev-date__phrase { display: block; }
+}
+
+.ev-plate__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: 'tags' 'title' 'meta' 'cta' 'desc';
+  row-gap: var(--s-4);
+  margin-top: var(--s-5);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--c-ink);
+}
+.ev-plate__tags { grid-area: tags; }
+.ev-plate__title { grid-area: title; max-width: 20em; text-wrap: balance; overflow-wrap: anywhere; }
+:lang(zh) .ev-plate__title { max-width: 16em; }
+.ev-plate__meta { grid-area: meta; }
+.ev-plate__cta { grid-area: cta; margin-top: var(--s-2); }
+.ev-plate__desc { grid-area: desc; max-width: var(--measure); color: var(--c-ink-2); }
+.ev-plate .ev-plate__image { margin-top: var(--s-7); width: 100%; }
+
+@media (min-width: 768px) {
+  .ev-plate__body {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--gutter);
+    row-gap: var(--s-4);
+    grid-template-areas:
+      'tags  tags  tags  tags  tags  tags  tags  . meta meta meta meta'
+      'title title title title title title title . meta meta meta meta'
+      'desc  desc  desc  desc  desc  desc  desc  . cta  cta  cta  cta';
+    grid-template-rows: auto auto 1fr;
+    margin-top: var(--s-6);
+    padding-top: var(--s-6);
+  }
+  /* The meta becomes a short label column: one fact per line. */
+  .ev-plate__meta .event-meta { display: grid; gap: 0.35rem; font-size: var(--fs-body); }
+  .ev-plate__meta .event-meta dd { color: var(--c-ink); }
+  .ev-plate__cta { margin-top: var(--s-2); align-self: start; }
+  .ev-plate__desc { margin-top: var(--s-2); }
+}
+
+/* — Empty state (production today) —————————————————————————————
+   Honest line, then the WeChat ID at H2 size and Copy as the filled button. */
+.events-empty { display: grid; row-gap: var(--s-4); }
+.events-empty__title { max-width: 14em; }
+:lang(zh) .events-empty__title { max-width: 12em; }
+.events-empty__body { max-width: var(--measure); color: var(--c-ink-2); }
+:lang(zh) .events-empty__body { word-break: keep-all; overflow-wrap: anywhere; }
+.events-empty__wechat { display: grid; justify-items: start; gap: var(--s-4); margin-top: var(--s-3); }
+.events-empty__line { display: grid; gap: var(--s-1); margin: 0; }
+.events-empty__label { color: var(--c-muted); }
+.events-empty__id {
+  font-family: 'Source Serif 4 Variable', Georgia, serif;
+  font-size: var(--fs-h2);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  font-weight: 500;
+  color: var(--c-ink);
+}
+/* The page's one filled button (CopyButton is a quiet button elsewhere). */
+.events-empty .copy__btn { background: var(--c-ink); color: var(--c-paper); }
+.events-empty .copy__btn:hover { background: #000; }
+@media (max-width: 479px) {
+  .events-empty__wechat { justify-items: stretch; }
+  .events-empty .copy,
+  .events-empty .copy__btn { width: 100%; }
+  .events-empty .copy__btn { min-height: 54px; }
+}
+@media (min-width: 1024px) {
+  .events-empty { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: start; }
+  .events-empty__title,
+  .events-empty__body { grid-column: 1 / span 7; }
+  .events-empty__wechat { grid-column: 9 / -1; grid-row: 1 / span 2; margin-top: 0.35rem; }
+}
+
+/* — Image slot ——————————————————————————————————————————————— */
+.image-slot { margin: 0; overflow: hidden; background: var(--c-stone); }
+.image-slot img { width: 100%; height: 100%; object-fit: cover; }
+.image-slot--empty {
+  display: grid;
+  place-items: center;
+  background: var(--c-mist);
+  border: 1px dashed var(--c-muted);
+}
+.image-slot--empty figcaption {
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+  max-width: 18rem;
+  padding: 1rem;
+  text-align: center;
+  font-size: var(--fs-caption);
+  color: var(--c-ink-2);
+}
+
+/* Chinese event titles break at punctuation and spaces, so words never split
+   (示例活动标题 / （请替换为…）); overflow-wrap is the valve for a long unbroken title. */
+:lang(zh) :is(.ev-plate__title, .event-row__title, .event-feature__title) { word-break: keep-all; overflow-wrap: anywhere; }
+:lang(zh) :is(.ev-plate__desc, .event-feature__desc) { word-break: keep-all; overflow-wrap: anywhere; }
+
+/* Gate 4 (Seat 6 re-check, M2): on phones the featured event's Register must reach
+   the first screen. Tighten what sits above it — nothing reordered, nothing removed. */
+@media (max-width: 479px) {
+  .ev-plate .ev-date { font-size: clamp(2rem, 1.2rem + 3.6vw, 2.5rem); }
+  .ev-plate__kicker { margin-bottom: var(--s-2); }
+  .ev-plate__body { margin-top: var(--s-4); padding-top: var(--s-4); row-gap: var(--s-3); }
+  .ev-plate .ev-plate__title { font-size: var(--fs-h3); line-height: var(--lh-h3); }
+  .ev-plate__cta { margin-top: 0; }
+}
