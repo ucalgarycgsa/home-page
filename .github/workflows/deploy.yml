@@ -38,8 +38,10 @@ jobs:
       - name: Build static pages
         run: npm run build
         env:
-          VITE_BASE_PATH: ${{ steps.pages.outputs.base_path }}/
-          SITE_URL: ${{ steps.pages.outputs.base_url }}
+          # Custom domains serve this site at /, rather than /home-page/.
+          # Set these explicitly so a domain change cannot reuse the repository path.
+          VITE_BASE_PATH: /
+          SITE_URL: https://uccgsa.club
       - name: Upload site
         uses: actions/upload-pages-artifact@v4
         with:
